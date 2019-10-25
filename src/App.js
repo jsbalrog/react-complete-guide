@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import './App.css';
+import './App.module.css';
 import Person from './Person/Person';
-import Radium, {StyleRoot} from 'radium';
 
 class App extends Component {
   // Special property in classes that extend Component
@@ -24,7 +23,7 @@ class App extends Component {
   nameChangedHandler = (event, id) => {
     // Get the index of the person under question
     const personIndex = this.state.persons.findIndex(p => {
-      return p.id === id;
+      return p.userId === id;
     });
 
     // Using that index, get the person from the persons array
@@ -56,7 +55,7 @@ class App extends Component {
 
   togglePersonsHandler = () => {
     const doesShow = this.state.showPersons;
-    this.setState({showPersons: !doesShow});
+    this.setState({showPersons: !doesShow}); 
   };
 
   render() {
@@ -67,10 +66,6 @@ class App extends Component {
       border: '1px solid blue',
       padding: '8px',
       cursor: 'pointer',
-      ':hover': {
-        backgroundColor: 'lightgreen',
-        color: 'black'
-      }
     };
 
     let persons = null;
@@ -90,10 +85,6 @@ class App extends Component {
         </div>  
       );
       style.backgroundColor = 'red';
-      style[':hover'] = {
-        backgroundColor: 'salmon',
-        color: 'black'
-      }
     }
 
     const classes = [];
@@ -105,7 +96,6 @@ class App extends Component {
     }
 
     return (
-      <StyleRoot>
       <div className="App">
         <h1>React App</h1>
         <p className={classes.join(' ')}>This is really working!</p>
@@ -114,9 +104,8 @@ class App extends Component {
           onClick={() => this.togglePersonsHandler()}>Toggle Persons</button>
           {persons}
       </div>
-      </StyleRoot>
     );
   }
 }
 
-export default Radium(App);
+export default App;
