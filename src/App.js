@@ -6,27 +6,51 @@ class App extends Component {
   // Special property in classes that extend Component
   state = {
     persons: [
-      { name: 'Max', age: 28 },
-      { name: 'Manu', age: 29 },
-      { name: 'Stephanie', age: 26 },
+      { id: '1', name: 'Max', age: 28 },
+      { id: '2', name: 'Manu', age: 29 },
+      { id: '3', name: 'Stephanie', age: 26 },
     ],
     otherState: 'Some other value',
     showPersons: false,
   };
 
   deletePersonHandler = (personIndex) => {
-    console.log('here');
-    const persons = this.state.persons;
+    const persons = [...this.state.persons]; // Copy the full array, since it's a reference. Don't mutate the original.
     persons.splice(personIndex, 1);
     this.setState({persons: persons});
   }
 
-  nameChangedHandler = (event) => {
-    this.setState({ persons: [
-      { name: 'Max', age: 28 },
-      { name: event.target.value, age: 29 },
-      { name: 'Stephanie', age: 26 },
-    ]});
+  nameChangedHandler = (event, id) => {
+    // Get the index of the person under question
+    const personIndex = this.state.persons.findIndex(p => {
+      return p.id === id;
+    });
+
+    // Using that index, get the person from the persons array
+    const updatedPerson = {
+      ...this.state.persons[personIndex]
+    };
+
+    // Change the name to what the new value is
+    updatedPerson.name = event.target.value;
+
+    const personsCopy = [...this.state.persons]; // Copy the array
+    personsCopy[personIndex] = updatedPerson; // Update it with the new person
+
+    this.setState({ persons: personsCopy});
+  }
+
+  ageChangedHandler = (event, id) => {
+    const personIndex = this.state.persons.findIndex(p => {
+      return p.id === id;
+    });
+    const updatedPerson = {
+      ...this.state.persons[personIndex]
+    };
+    updatedPerson.age = event.target.value;
+    const personsCopy = [...this.state.persons];
+    personsCopy[personIndex] = updatedPerson;
+    this.setState({ persons: personsCopy })
   }
 
   togglePersonsHandler = () => {
@@ -52,7 +76,10 @@ class App extends Component {
             return <Person 
               click={() => this.deletePersonHandler(index)}
               name={person.name}
-              age={person.age} />
+              age={person.age}
+              key={person.id}
+              nameChanged={(event) => this.nameChangedHandler(event, person.id)}
+              ageChanged={(event) => this.ageChangedHandler(event, person.id)} />
           })}
         </div>  
       );
