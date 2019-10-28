@@ -1,34 +1,35 @@
-import React, {
-  Component
-} from 'react';
+import React, {Component} from 'react';
 import './App.module.css';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
 
 class App extends Component {
 
-  // Special property in classes that extend Component
-  state = {
-    persons: [
-      {
-        id: '1',
-        name: 'Max',
-        age: 28
-      },
-      {
-        id: '2',
-        name: 'Manu',
-        age: 29
-      },
-      {
-        id: '3',
-        name: 'Stephanie',
-        age: 26
-      },
-    ],
-    otherState: 'Some other value',
-    showPersons: false,
-  };
+  constructor(props) {
+    super(props);
+    // Special property in classes that extend Component
+    this.state = {
+      persons: [
+        {
+          id: '1',
+          name: 'Max',
+          age: 28
+        },
+        {
+          id: '2',
+          name: 'Manu',
+          age: 29
+        },
+        {
+          id: '3',
+          name: 'Stephanie',
+          age: 26
+        },
+      ],
+      otherState: 'Some other value',
+      showPersons: false,
+    }; 
+  } 
 
   deletePersonHandler = (personIndex) => {
     const persons = [...this.state.persons]; // Copy the full array, since it's a reference. Don't mutate the original.
