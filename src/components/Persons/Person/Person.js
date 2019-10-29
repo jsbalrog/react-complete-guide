@@ -3,6 +3,12 @@ import PropTypes from 'prop-types';
 import "./Person.css";
 
 class Person extends Component {
+
+  constructor(props) {
+    super(props);
+    this.inputElementRef = React.createRef();
+  }
+
   render() {
     return (
       <Fragment>
@@ -10,13 +16,15 @@ class Person extends Component {
           I'm {this.props.name} who is {this.props.age}
         </p>
         <p>{this.props.children}</p>
-        Update name:{" "}
+        Update name:
         <input
           type="text"
+          // ref={(inputEl) => {this.inputElement = inputEl}}
+          ref={this.inputElementRef}
           onChange={this.props.nameChanged}
           value={this.props.name}
         />
-        Update age:{" "}
+        Update age:
         <input
           type="text"
           onChange={this.props.ageChanged}
@@ -24,6 +32,10 @@ class Person extends Component {
         />
       </Fragment>
     );
+  }
+
+  componentDidMount() {
+    this.inputElementRef.current.focus();
   }
 }
 
