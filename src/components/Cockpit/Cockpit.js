@@ -1,8 +1,13 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
+import AuthContext from '../../context/auth-context';
 
 const cockpit = props => {
+  const toggleBtnRef = useRef();
+
+  // Runs after every render cycle
   useEffect(() => {
     console.log("[Cockpit.js] useEffect");
+    toggleBtnRef.current.click();
   }, [props.persons]); // Executes when persons changes. Pass empty array if you only want it to run for the first time.
 
   const style = {
@@ -31,9 +36,12 @@ const cockpit = props => {
     <div>
       <h1>{props.title}</h1>
       <p className={assignedClasses.join(" ")}>This is really working!</p>
-      <button style={style} onClick={props.clicked}>
+      <button ref={toggleBtnRef} style={style} onClick={props.clicked}>
         Toggle Persons
       </button>
+      <AuthContext.Consumer>
+          {(context) => <button style={style} onClick={context.login}>Log in</button>}
+      </AuthContext.Consumer>
     </div>
   );
 };

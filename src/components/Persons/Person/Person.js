@@ -1,6 +1,7 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from 'prop-types';
 import "./Person.css";
+import AuthContext from '../../../context/auth-context';
 
 class Person extends Component {
 
@@ -12,6 +13,9 @@ class Person extends Component {
   render() {
     return (
       <Fragment>
+        <AuthContext.Consumer>
+          {(context) => context.authenticated ? <p>Authenticated</p> : <p>Please log in</p>}
+        </AuthContext.Consumer>
         <p onClick={this.props.click}>
           I'm {this.props.name} who is {this.props.age}
         </p>
