@@ -24,8 +24,8 @@ module.exports = {
     ],
     "rules": {
         "react/no-unescaped-entities" : 0,
-        "react/prop-types": 0
-        "no-console": false,
-        "no-unused-vars": false
+        "react/prop-types": 0,
+        "no-console": 0,
+        "no-unused-vars": 0
     }
 };
