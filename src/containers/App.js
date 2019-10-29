@@ -26,7 +26,8 @@ class App extends Component {
         }
       ],
       otherState: "Some other value",
-      showPersons: false
+      showPersons: false,
+      changeCounter: 0,
     };
   }
 
@@ -55,8 +56,11 @@ class App extends Component {
     const personsCopy = [...this.state.persons]; // Copy the array
     personsCopy[personIndex] = updatedPerson; // Update it with the new person
 
-    this.setState({
-      persons: personsCopy
+    this.setState((prevState, props) => {
+      return {
+        persons: personsCopy,
+        changeCounter: this.state.changeCounter + 1
+      }
     });
   };
 
